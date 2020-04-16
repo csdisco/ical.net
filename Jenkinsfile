@@ -1,4 +1,4 @@
-def releasableBranch = '(?:origin/)?(?:(?:master)|(?:release\\d*)|(?:jenkins-integration))'
+def releasableBranch = '(?:origin/)?(?:(?:master)|(?:release\\d*))'
 
 pipeline {
     options {
@@ -42,10 +42,10 @@ pipeline {
         }
 
         stage('Publish') {
-            when {
-                beforeAgent true
-                expression { env.BRANCH_NAME ==~ releasableBranch }
-            }
+            // when {
+            //     beforeAgent true
+            //     // expression { env.BRANCH_NAME ==~ releasableBranch }
+            // }
             steps {
                 // Build will already do the package, so we only need to upload of that.
 
