@@ -47,7 +47,7 @@ pipeline {
             //     // expression { env.BRANCH_NAME ==~ releasableBranch }
             // }
             steps {
-                // Build will already do the package, so we only need to upload of that.
+                // Build will already do the package, so we only need to upload that.
 
                 script {
                     def server = Artifactory.server('DISCO')
