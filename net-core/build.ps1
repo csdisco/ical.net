@@ -23,7 +23,7 @@ function build() {
 }
 
 function package() {
-    dotnet pack Ical.Net/Ical.Net.csproj -p:NuspecFile=../Ical.Net.nuspec -p:NuspecBasePath=../ -p:NuspecProperties=\"version=0.0.1\"
+    dotnet pack /p:Configuration=Release Ical.Net/Ical.Net.csproj -p:NuspecFile=../Ical.Net.nuspec -p:NuspecBasePath=../ -p:NuspecProperties="version=0.0.${env:BUILD_NUMBER}"
     if ($LASTEXITCODE) {
         throw "Error package"
     }
