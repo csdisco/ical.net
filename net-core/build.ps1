@@ -1,3 +1,5 @@
+param ($version='0.0.0')
+
 $ErrorActionPreference = "Stop"
 
 
@@ -23,7 +25,7 @@ function build() {
 }
 
 function package() {
-    dotnet pack --output nupkgs /p:Configuration=Release Ical.Net/Ical.Net.csproj -p:NuspecFile=../Ical.Net.nuspec -p:NuspecBasePath=../ -p:NuspecProperties="version=0.0.${env:BUILD_NUMBER}"
+    dotnet pack --output nupkgs /p:Configuration=Release Ical.Net/Ical.Net.csproj -p:NuspecFile=../Ical.Net.nuspec -p:NuspecBasePath=../ -p:NuspecProperties="version=${version}"
     if ($LASTEXITCODE) {
         throw "Error package"
     }
@@ -33,7 +35,7 @@ try {
     clean
     restore
     build
-    package
+    package $version
 }
 catch {
     Write-Host "Exception: $_"

@@ -1,4 +1,5 @@
 def releasableBranch = '(?:origin/)?(?:(?:master)|(?:release\\d*))'
+def buildVersion = ''
 
 pipeline {
     options {
@@ -22,13 +23,22 @@ pipeline {
             steps {
                 cleanWs()
                 checkout scm
+                script {
+                    buildVersion = '0.0.${env.BUILD_NUMBER}'
+                    if (releasableBranch) {
+                        currentBuild.description = String.format("Build, Validate, and Release %s", version)
+                    }
+                    else {
+                        currentBuild.description = String.format("Build & Validate %s", version)
+                    }
+                }
             }
         }
 
         stage('Build') {
             steps {
                 dir('net-core') {
-                    powershell '.\\build.ps1'
+                    powershell '.\\build.ps1 -version ${buildVersion}'
                 }
             }
         }
